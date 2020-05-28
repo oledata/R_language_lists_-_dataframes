@@ -1,0 +1,103 @@
+---
+title: "Assignment 1: Lists, dataframes"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+  html_notebook:
+    df_print: paged
+    highlight: tango
+    self_contained: yes
+    theme: paper
+    toc: yes
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+<div style="font-size:1.5em">
+**Make sure your solution to each question includes enough output to show that your solution is correct (i.e if asked to create a vector, output the vector afterwards)**
+</div>
+
+
+##Question #1 - Lists
+a. Create the following vectors 
+    - `num` = `10` random numbers
+    - `sequence` = the sequence of numbers from `1` to `10`, by `.5`
+    - `words` = `"this", "is", "super", "fun"`
+    - `bool.vals` = `TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE`
+    
+```{r}
+num <- c(1,4,5,7,8,8,6,9,4,5,10)
+sequence <- seq(1,10, by=5)
+words <- c("this", "is", "super", "fun")
+bool.vals <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE)
+```
+b. Combine these vectors into a list called `stuff` and make sure each part of the list is named the same as its original vector 
+```{r}
+stuff <- list(num=num,sequence=sequence,words=words,bool.vals=bool.vals)
+```
+c. Access the list to output just the words, then just the 3rd word.
+```{r}
+words[3]
+```
+
+
+##Question #2 - Data Frames
+
+
+a. Use the `CO2` data from the `datasets` package, and use head to view the top of the file.  
+```{r}
+library(datasets)
+CO2
+```
+b. Use base R, output the following subsets of the data frame
+
+- Just the `conc` column. 
+```{r}
+CO2[,c("conc")]
+```    
+   
+- Just the `fifth` row. 
+```{r}
+CO2[5, ]
+```    
+- The first `5` rows. 
+    
+```{r}
+CO2[1:5, ]
+```    
+- Rows `10` to `15`. 
+    
+```{r}
+CO2[10:15, ]
+```    
+- The `plant`, `Treatment` and `uptake` columns 
+    
+```{r}
+CO2[, c("Plant", "Treatment", "uptake")]
+```    
+- The rows where `Treatment` equals `chilled`
+```{r}
+(CO3 <- CO2[with(CO2, Treatment == "chilled"), ]) 
+```    
+
+- The rows where `Treatment` equals `chilled` and `uptake` <`10` 
+```{r}
+(CO3 <- CO2[with(CO2, Treatment == "chilled" & uptake<10), ])
+```    
+
+ c. Drop the `Type` column from the data frame
+```{r}
+within (CO2, rm("Type"))
+```
+
+d. Add a column to the dataframe containing the results of `uptake`/`conc` 
+```{r}
+iris <- within(CO2, ratio <- uptake / conc)
+```
+
+
